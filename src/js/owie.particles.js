@@ -39,7 +39,8 @@
         // Default options
         _this.defaults = {
           selector: 'img.owie-particles',
-          wrapperElement: 'div'
+          wrapperElement: 'div',
+          wrapperClasses: []
         };
 
         // Initial settings
@@ -70,7 +71,26 @@
     }());
 
     OwieParticles.prototype.wrapImage = function(imageElement) {
-      
+      var _this = this;
+      var clonedImageElement = imageElement.cloneNode(true);
+      var wrapperElement = document.createElement(_this.options.wrapperElement);
+
+      // Add wrapper classes
+      wrapperElement.classList.add('owie-properties-wrapper');
+
+      // Add options classes
+      if (_this.options.wrapperClasses.length) {
+        for (var classIndex = 0; classIndex < _this.options.wrapperClasses.length; classIndex += 1) {
+          wrapperElement.classList.add(_this.options.wrapperClasses[classIndex]);
+        }
+      }
+
+      // Add cloned image to the new element
+      wrapperElement.appendChild(clonedImageElement);
+
+      // Insert before an image
+      imageElement.parentNode.insertBefore(wrapperElement, imageElement);
+      imageElement.parentNode.removeChild(imageElement);
     };
 
     OwieParticles.prototype.init = function(imageElement) {
