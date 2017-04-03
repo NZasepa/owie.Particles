@@ -39,7 +39,7 @@
         // Default options
         _this.defaults = {
           selector: 'img.owie-particles',
-
+          wrapperElement: 'div'
         };
 
         // Initial settings
@@ -69,8 +69,19 @@
       return OwieParticles;
     }());
 
+    OwieParticles.prototype.wrapImage = function(imageElement) {
+      
+    };
+
     OwieParticles.prototype.init = function(imageElement) {
-      console.log(imageElement);
+      var _this = this;
+
+      // Check if image is loaded
+      if (imageElement.complete) {
+        _this.wrapImage(imageElement);
+      } else { // Add an event if it's not
+        imageElement.addEventListener('load', OwieParticles.prototype.wrapImage.call(_this, imageElement));
+      }
     };
 
     return OwieParticles;
